@@ -34,12 +34,14 @@ var app = {
     },
 
     receivedEvent: function(id) {
-        window.db = window.sqlitePlugin.openDatabase({
+        //window.db = window.sqlitePlugin.openDatabase({
+        db = window.sqlitePlugin.openDatabase({
             name: 'my.db',
             location: 'default',            
             androidDatabaseProvider: 'system'
         });
-        window.db.transaction(function(tx) {tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (login, pass)');
+        //window.db.transaction(function(tx) {tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (login, pass)');
+        db.transaction(function(tx) {tx.executeSql('CREATE TABLE IF NOT EXISTS usuarios (login, pass)');
         }, function(error) {
             //console.log('Transaction ERROR: ' + error.message);
             alert('Transaction ERROR: ' + error.message);
@@ -50,12 +52,13 @@ var app = {
     }, 
     
     inserir: function(){
-        console.log("function inserir(){...");
-        console.log(window.db);
+        //console.log("function inserir(){...");
+        //console.log(window.db);
         let login = document.getElementById("input_usuario").value;
         let pass = document.getElementById("input_senha").value;
 
-        window.db.transaction(function(tx) {tx.executeSql('INSERT INTO usuarios VALUES (?,?)', [login, pass]);
+        //window.db.transaction(function(tx) {tx.executeSql('INSERT INTO usuarios VALUES (?,?)', [login, pass]);
+        db.transaction(function(tx) {tx.executeSql('INSERT INTO usuarios VALUES (?,?)', [login, pass]);
         }, function(error) {
             //console.log('Erro durante a transacao com o banco: ' + error.message);
             alert('Erro durante a transacao com o banco: ' + error.message);
@@ -66,9 +69,10 @@ var app = {
     },
     
     listar: function(){
-        console.log("function listar(){...");
-        console.log(window.db);
-        window.db.executeSql('SELECT login, pass FROM usuarios', [], function(ignore,rs) {
+        //console.log("function listar(){...");
+        //console.log(window.db);
+        //window.db.executeSql('SELECT login, pass FROM usuarios', [], function(ignore,rs) {
+        db.executeSql('SELECT login, pass FROM usuarios', [], function(ignore,rs) {
                 //console.log("analisando rs");
                 alert("analisando rs");
                 //console.log(JSON.stringify(rs));
